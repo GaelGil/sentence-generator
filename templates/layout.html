@@ -10,28 +10,52 @@
 
   </head>
   <body>
-<h1>base</h1>
-
-<hr>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
+    <nav class="navbar navbar-expand-lg navbar-primary bg-dark">
+      <a class="navbar-brand" href="#">Sentence Generator</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
         </ul>
-        {% endif %}
+      </div>
+    </nav>
+<br>
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+             {% for message in messages %}
+              <li>{{ message }}</li>
+              {% endfor %}
+           </ul>
+         {% endif %}
         {% endwith %}
 
-        <p><b>You wrote: </b><i>{% if phrase %}{{ phrase }}{% else %}____{% endif %}</i></p>
-        <p><b>Sentence: </b><i>{% if sentence %}{{ sentence }}{% else %}____{% endif %}</i></p>
-        <p><b>The sentence is </b><i>{% if basic_sentence %}{{ basic_sentence }}{% else %}____{% endif %}</i></p>
+          <p><b>You wrote: </b><i>{% if phrase %}{{ phrase }}{% else %}____{% endif %}</i></p>
+          <p><b>Sentence: </b><i>{% if sentence %}{{ sentence }}{% else %}____{% endif %}</i></p>
+          <p><b>The sentence is </b><i>{% if basic_sentence %}{{ basic_sentence }}{% else %}____{% endif %}</i></p>
 
 
-    {% block content %}
+        {% block content %}
 
+        {% endblock content %}
+    </div>
+    <style>
+      body {
+        /* background-color: #36393E; */
+      }
 
-    {% endblock content %}
+      p{
+
+        }
+    </style>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

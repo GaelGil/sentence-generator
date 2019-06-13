@@ -8,7 +8,6 @@ def create_sentence(**dict):
     for i in range(SENTENCE_LENGTH):
         print(word, end=" ")
         word = random.sample(dict[word], 1)[0]
-    # return(word)
 
     
 def create_dict(tokens, tokens_index):

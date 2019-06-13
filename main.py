@@ -7,11 +7,6 @@ app.config['SECRET_KEY'] = '42f49c1690ad3348fa5212382e379685'
 
 # @app.route('/')
 @app.route('/', methods=['GET', 'POST'])
-"""
-this is the main route of the site
-where u will enter ur own book and
-itll generate a sentence
-"""
 def home():
     phrase = None
     sentence = None
@@ -24,10 +19,6 @@ def home():
 
 
 @app.route('/generate', methods=['GET', 'POST'])
-"""
-this is the route to generate a sentence without
-inputing ur own book
-"""
 def generate():
     basic_sentence = None
     form = Make_Sentece_Form()
