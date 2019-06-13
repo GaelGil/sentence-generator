@@ -24,6 +24,9 @@
         {% endwith %}
 
         <p><b>You wrote: </b><i>{% if phrase %}{{ phrase }}{% else %}____{% endif %}</i></p>
+        <p><b>Sentence: </b><i>{% if sentence %}{{ sentence }}{% else %}____{% endif %}</i></p>
+        <p><b>The sentence is </b><i>{% if basic_sentence %}{{ basic_sentence }}{% else %}____{% endif %}</i></p>
+
 
     {% block content %}
 

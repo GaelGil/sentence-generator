@@ -4,12 +4,13 @@ import re
 
 def create_sentence(**dict):
     SENTENCE_LENGTH = 10
-    word = 'god'
+    word = 'the'
     for i in range(SENTENCE_LENGTH):
         print(word, end=" ")
         word = random.sample(dict[word], 1)[0]
+    # return(word)
 
-
+    
 def create_dict(tokens, tokens_index):
     words_with_nearby = {}
     for token in tokens_index:
@@ -25,6 +26,9 @@ def create_dict(tokens, tokens_index):
 
 def clean_data(data):
     tokens = data.split()
+    # cleaned = re.sub(r'[\.!#$%*()@,:/;"{}+=-]', ' ', data)
+    # clean_nums = re.sub(r'[0-9]', ' ', cleaned)
+    # clean_finished = re.sub(r'[^\d*:\d*]', ' ', clean_nums)
     tokens = [token.lower() for token in tokens] 
     tokens = [token.replace('.', '') for token in tokens]
     tokens = [token.replace(',', '') for token in tokens]
@@ -34,6 +38,7 @@ def clean_data(data):
     tokens_index = list(set(tokens))
     return create_dict(tokens, tokens_index)
 
+   
 
 def create_book(book):
     return clean_data(book)
@@ -43,4 +48,8 @@ def generate_sentence():
         data = file.read().replace('\n', ' ')  
     return clean_data(data)
 
-generate_sentence()
+# generate_sentence()
+# def create_book(book):
+#     works = ' passed'
+#     return book + 
+# generate_sentence()
