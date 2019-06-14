@@ -5,9 +5,13 @@ import re
 def create_sentence(**dict):
     SENTENCE_LENGTH = 10
     word = 'the'
+    sentence = []
+    space = ' '
     for i in range(SENTENCE_LENGTH):
-        print(word, end=" ")
+        sentence.append(word)
         word = random.sample(dict[word], 1)[0]
+
+    return space.join(sentence)
 
     
 def create_dict(tokens, tokens_index):
@@ -47,8 +51,3 @@ def generate_sentence():
         data = file.read().replace('\n', ' ')  
     return clean_data(data)
 
-# generate_sentence()
-# def create_book(book):
-#     works = ' passed'
-#     return book + 
-# generate_sentence()
