@@ -28,19 +28,11 @@ def create_dict(tokens, tokens_index):
 
 
 def clean_data(data):
-    tokens = data.split()
-    # cleaned = re.sub(r'[\.!#$%*()@,:/;"{}+=-]', ' ', data)
-    # clean_nums = re.sub(r'[0-9]', ' ', cleaned)
-    # clean_finished = re.sub(r'[^\d*:\d*]', ' ', clean_nums)
-    tokens = [token.lower() for token in tokens] 
-    tokens = [token.replace('.', '') for token in tokens]
-    tokens = [token.replace(',', '') for token in tokens]
-    tokens = [token.replace("'", '') for token in tokens]
-    tokens = [token.replace('""', '') for token in tokens]
-    tokens = [token.replace(':', '') for token in tokens]
+    cleaned = re.sub(r'[\.!#$%*()@,:/;"{}+=-]', ' ', data)
+    clean_nums = re.sub(r'[0-9]', ' ', cleaned)
+    tokens = clean_nums.split()
     tokens_index = list(set(tokens))
     return create_dict(tokens, tokens_index)
-
    
 
 def create_book(book):
