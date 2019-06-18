@@ -47,6 +47,7 @@ def clean_data(data):
     cleaned = re.sub(r'[\.!#$%*()@,:/;"{}+=-]', ' ', data)
     clean_nums = re.sub(r'[0-9]', ' ', cleaned)
     tokens = clean_nums.split()
+    tokens = [token.lower() for token in tokens] 
     tokens_index = list(set(tokens))
     return create_dict(tokens, tokens_index)
    
