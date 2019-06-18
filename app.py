@@ -3,6 +3,11 @@ import re
 
 
 def create_sentence(**dict):
+    """
+    This function takes in a dictionary as its argument
+    and populates the list sentence with 10 words that 
+    come after the keyword and the word after that
+    """
     SENTENCE_LENGTH = 10
     word = 'the'
     sentence = []
@@ -15,6 +20,11 @@ def create_sentence(**dict):
 
     
 def create_dict(tokens, tokens_index):
+    """
+    this function takens in a list of tokens
+    and creates a dictionary to with a word as its 
+    key and the words after it as its value
+    """
     words_with_nearby = {}
     for token in tokens_index:
         words_with_nearby[token] = []
@@ -28,6 +38,12 @@ def create_dict(tokens, tokens_index):
 
 
 def clean_data(data):
+    """
+    this function takes in a varible which is a book 
+    and the book is cleaned with regular expressions to
+    get rid of certain punctuation and numbrers
+    it also returns 2 variables to create_dict
+    """
     cleaned = re.sub(r'[\.!#$%*()@,:/;"{}+=-]', ' ', data)
     clean_nums = re.sub(r'[0-9]', ' ', cleaned)
     tokens = clean_nums.split()
@@ -36,10 +52,20 @@ def clean_data(data):
    
 
 def create_book(book):
+    """
+    this function takes in a string and returns it to the function
+    clean_data 
+    """
     return clean_data(book)
 
 def generate_sentence():
+    """
+    this function takes in no argument but it opens a text file and
+    puts it in varible data to return to clean_data
+    """
     with open('bible.txt', 'r') as file:        
         data = file.read().replace('\n', ' ')  
     return clean_data(data)
+
+
 
