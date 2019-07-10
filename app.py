@@ -68,3 +68,40 @@ def generate_sentence():
     with open('bible.txt', 'r') as file:        
         data = file.read().replace('\n', ' ')  
     return clean_data(data)
+
+# import re
+
+
+
+# def get_sentence_dict(tokens):
+#     return tokens
+#     """
+#     implement actual function
+#     """
+
+
+# def clean_book_tokens(book):
+#     clean_book = [re.sub(r'\.', '', i) for i in book] # strips punct
+#     clean_book = [i.lower() for i in clean_book] # normalizes
+#     return clean_book
+
+
+# def get_book_tokens(book):
+#     return book.split()
+
+
+# def generate_sentence(book_path, sentence_len=12):
+#     with open(book_path, 'r') as b:
+#         book = b.read()
+
+#     book_tokens = get_book_tokens(book)
+#     cleaned_book_tokens = clean_book_tokens(book_tokens)
+    
+
+#     sentence_dict = get_sentence_dict(arg1, arg2)
+
+
+#     return sentence_dict
+
+
+# print(generate_sentence('bible.txt', 14))
