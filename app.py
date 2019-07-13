@@ -34,6 +34,7 @@ def create_dict(tokens, tokens_index):
         next_word = tokens[i + 1]
 
         words_with_nearby[current_word].append(next_word)
+    # return (**words_with_nearby)
     return create_sentence(**words_with_nearby)
 
 
@@ -49,6 +50,7 @@ def clean_data(data):
     tokens = clean_nums.split()
     tokens = [token.lower() for token in tokens] 
     tokens_index = list(set(tokens))
+    # return tokens, tokens_index
     return create_dict(tokens, tokens_index)
 
 
@@ -67,11 +69,17 @@ def generate_sentence():
     """
     with open('bible.txt', 'r') as file:        
         data = file.read().replace('\n', ' ')  
+    # return data
     return clean_data(data)
 
 # import re
 
 
+# def make_sentence(book):
+#     the_book = create_book(book)
+#     tokens, tokens_index = clean_book_tokens(the_book)
+#     token_dictionary = create_dict(tokens, tokens_index)
+#     dictionary = create_sentence(**token_dictionary)
 
 # def get_sentence_dict(tokens):
 #     return tokens
