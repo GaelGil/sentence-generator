@@ -75,11 +75,11 @@ def generate_sentence():
 # import re
 
 
-# def make_sentence(book):
-#     the_book = create_book(book)
-#     tokens, tokens_index = clean_book_tokens(the_book)
-#     token_dictionary = create_dict(tokens, tokens_index)
-#     dictionary = create_sentence(**token_dictionary)
+def make_sentence(book):
+    the_book = create_book(book)
+    tokens, tokens_index = clean_data(the_book)
+    token_dictionary = create_dict(tokens, tokens_index)
+    dictionary = create_sentence(**token_dictionary)
 
 # def get_sentence_dict(tokens):
 #     return tokens
