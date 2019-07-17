@@ -1,7 +1,6 @@
 import random 
 import re
 
-
 def create_sentence(**dict):
     """
     This function takes in a dictionary as its argument
@@ -18,7 +17,6 @@ def create_sentence(**dict):
 
     return space.join(sentence)
 
-    
 def create_dict(tokens, tokens_index):
     """
     this function takens in a list of tokens
@@ -35,7 +33,6 @@ def create_dict(tokens, tokens_index):
 
         words_with_nearby[current_word].append(next_word)
     return create_sentence(**words_with_nearby)
-
 
 def clean_data(data):
     """
@@ -67,6 +64,3 @@ def generate_sentence():
     with open('bible.txt', 'r') as file:        
         data = file.read().replace('\n', ' ')  
     return clean_data(data)
-
-
-
