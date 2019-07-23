@@ -6,6 +6,12 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '42f49c1690ad3348fa5212382e379685'
 
 @app.route('/', methods=['GET', 'POST'])
+"""
+This is the main route of the website
+the phrase is the input from the user 
+and the sentence is the generated sentence
+we get back
+"""
 def home():
     phrase = None
     sentence = None

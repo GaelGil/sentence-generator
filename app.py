@@ -72,9 +72,6 @@ def generate_sentence():
     # return data
     return clean_data(data)
 
-# import re
-
-
 def make_sentence(book):
     the_book = create_book(book)
     tokens, tokens_index = clean_data(the_book)
