@@ -15,7 +15,7 @@ def create_sentence(**dict):
     for i in range(SENTENCE_LENGTH):
         sentence.append(word)
         word = random.sample(dict[word], 1)[0]
-
+    
     return space.join(sentence)
 
 
@@ -34,8 +34,8 @@ def create_dict(tokens, tokens_index):
         next_word = tokens[i + 1]
 
         words_with_nearby[current_word].append(next_word)
-    # return (**words_with_nearby)
-    return create_sentence(**words_with_nearby)
+    return words_with_nearby
+    # return create_sentence(**words_with_nearby)
 
 
 def clean_data(data):
@@ -50,8 +50,8 @@ def clean_data(data):
     tokens = clean_nums.split()
     tokens = [token.lower() for token in tokens] 
     tokens_index = list(set(tokens))
-    # return tokens, tokens_index
-    return create_dict(tokens, tokens_index)
+    return tokens, tokens_index
+    # return create_dict(tokens, tokens_index)
 
 
 def create_book(book):
@@ -81,35 +81,3 @@ def make_sentence(book):
     token_dictionary = create_dict(tokens, tokens_index)
     dictionary = create_sentence(**token_dictionary)
 
-# def get_sentence_dict(tokens):
-#     return tokens
-#     """
-#     implement actual function
-#     """
-
-
-# def clean_book_tokens(book):
-#     clean_book = [re.sub(r'\.', '', i) for i in book] # strips punct
-#     clean_book = [i.lower() for i in clean_book] # normalizes
-#     return clean_book
-
-
-# def get_book_tokens(book):
-#     return book.split()
-
-
-# def generate_sentence(book_path, sentence_len=12):
-#     with open(book_path, 'r') as b:
-#         book = b.read()
-
-#     book_tokens = get_book_tokens(book)
-#     cleaned_book_tokens = clean_book_tokens(book_tokens)
-    
-
-#     sentence_dict = get_sentence_dict(arg1, arg2)
-
-
-#     return sentence_dict
-
-
-# print(generate_sentence('bible.txt', 14))
