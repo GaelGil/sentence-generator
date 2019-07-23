@@ -2,7 +2,7 @@ import random
 import re
 
 
-def create_sentence(**dict):
+def create_sentence(**dict:dict):
     """
     This function takes in a dictionary as its argument
     and populates the list sentence with 10 words that 
@@ -19,7 +19,7 @@ def create_sentence(**dict):
     return space.join(sentence)
 
 
-def create_dict(tokens, tokens_index):
+def create_dict(tokens: list, tokens_index: list) -> dict:
     """
     This function takes in a list of tokens
     and creates a dictionary to with a word as its 
@@ -38,7 +38,7 @@ def create_dict(tokens, tokens_index):
     # return create_sentence(**words_with_nearby)
 
 
-def clean_data(data):
+def clean_data(data: list) -> list:
     """
     This function takes in a varible which is a book 
     and the book is cleaned with regular expressions to
