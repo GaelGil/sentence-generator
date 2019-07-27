@@ -3,7 +3,7 @@ import re
 
 
 
-def create_sentence(tokens_dictionary:dict, starting_word='the', SENTENCE_LENGTH = 10):
+def create_sentence(tokens_dictionary:dict, starting_word='the', SENTENCE_LENGTH = 10)->str:
     """
     This function takes in a dictionary as its argument
     and populates the list sentence with 10 words that 
@@ -24,8 +24,6 @@ def create_dict(tokens: list, tokens_index: list) -> dict:
     and creates a dictionary to with a word as its 
     key and the words after it as its value.
     """
-    # print("TOKENS: ", tokens)
-    # print("TOKENS_INDEX", tokens_index)
     words_with_nearby = {}
     for token in tokens_index:
         words_with_nearby[token] = []
@@ -35,7 +33,6 @@ def create_dict(tokens: list, tokens_index: list) -> dict:
         next_word = tokens[i + 1]
 
         words_with_nearby[current_word].append(next_word)
-    print(words_with_nearby)
     return words_with_nearby
 
 
@@ -46,7 +43,6 @@ def clean_data(data: list) -> list:
     get rid of certain punctuation and numbrers.
     It also returns 2 variables to create_dict.
     """
-    # print("DATA " , data)
     cleaned = re.sub(r'[\.!#$%*()@,:/;"{}+=-]', ' ', data)
     clean_nums = re.sub(r'[0-9]', ' ', cleaned)
     tokens = clean_nums.split()
@@ -65,7 +61,7 @@ def generate_sentence():
     return data
 
 
-def make_sentence(book):
+def make_sentence(book:str)->str:
     """
     This function takes in a book or text from 
     the user and calls all the functions 
@@ -76,7 +72,7 @@ def make_sentence(book):
     return dictionary
 
 
-def make_bible_sentence():
+def make_bible_sentence()-> str:
     """
     This function takes in no argument and is called once
     and sets varianles to functions, those varibles are 
