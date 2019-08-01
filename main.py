@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, redirect,  url_for
 from forms import BookForm, Make_Sentece_Form
-from app import create_book, generate_sentence
+from app import make_sentence, generate_sentence
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '42f49c1690ad3348fa5212382e379685'
@@ -18,7 +18,7 @@ def home():
     form = BookForm()
     if form.validate_on_submit():
        phrase = form.book.data
-       sentence = create_book(form.book.data)
+       sentence = make_sentence(form.book.data)
        form.book.data = ''
     return render_template('home.html', form=form, phrase=phrase, sentence=sentence)
 

@@ -41,20 +41,21 @@ def clean_data(data: list) -> list:
     This function takes in a varible which is a book 
     and the book is cleaned with regular expressions to
     get rid of certain punctuation and numbrers.
-    It also returns 2 variables to create_dict.
+    It also returns 2 variables
     """
     cleaned = re.sub(r'[\.!#$%*()@,:/;"{}+=-]', ' ', data)
     clean_nums = re.sub(r'[0-9]', ' ', cleaned)
     tokens = clean_nums.split()
     tokens = [token.lower() for token in tokens] 
     tokens_index = list(set(tokens))
+    # print(tokens_index)
     return tokens, tokens_index
 
 
 def generate_sentence():
     """
     This function takes in no argument but it opens a text file and
-    puts it in varible data to return to clean_data
+    puts it in varible data
     """
     with open('test_bible.txt', 'r') as file:        
         data = file.read().replace('\n', ' ')  
@@ -66,11 +67,13 @@ def make_sentence(book:str)->str:
     This function takes in a book or text from 
     the user and calls all the functions 
     """
-    tokens, tokens_index = clean_data(the_book)
+    tokens, tokens_index = clean_data(book)
     token_dictionary = create_dict(tokens, tokens_index)
-    dictionary = create_sentence(**token_dictionary)
+    dictionary = create_sentence(token_dictionary)
     return dictionary
 
+my_string = '1:2 And the !# earth was without $ form,   and void; and *()@ darkness was upon, {  the } face of the deep. And the +  Spirit of God moved upon the face of the = waters. - 1:3 And God said, Let there be light: and there was light.  '
+make_sentence(my_string)
 
 def make_bible_sentence()-> str:
     """
@@ -86,3 +89,6 @@ def make_bible_sentence()-> str:
 
 if __name__ == "__main__":
     make_bible_sentence()
+
+
+
