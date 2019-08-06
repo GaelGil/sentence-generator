@@ -36,7 +36,7 @@ def create_dict(tokens: list, tokens_index: list) -> dict:
     return words_with_nearby
 
 
-def clean_data(data: list) -> list:
+def clean_data(data: str) -> list:
     """
     This function takes in a varible which is a book 
     and the book is cleaned with regular expressions to
