@@ -3,6 +3,10 @@ import re
 
 
 
+def markov_generated_sentence(text_data:str):
+    
+
+
 def create_sentence(tokens_dictionary:dict, starting_word='the', SENTENCE_LENGTH = 10)->str:
     """
     This function takes in a dictionary as its argument

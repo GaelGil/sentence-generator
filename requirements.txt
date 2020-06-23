@@ -10,11 +10,11 @@ gunicorn==19.9.0
 idna==2.8
 importlib-metadata==0.18
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2>=2.10.1
 MarkupSafe==1.1.0
 more-itertools==7.1.0
 packaging==19.0
-Pillow==6.0.0
+Pillow==6.2.2
 pluggy==0.12.0
 py==1.8.0
 pyparsing==2.4.0
@@ -31,3 +31,4 @@ wcwidth==0.1.7
 Werkzeug==0.14.1
 WTForms==2.2.1
 zipp==0.5.1
+
