@@ -1,18 +1,19 @@
 from flask import Flask, render_template, flash, redirect,  url_for
 from forms import BookForm, Make_Sentece_Form
 from app import make_sentence, generate_sentence
+import os
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = '42f49c1690ad3348fa5212382e379685'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 @app.route('/', methods=['GET', 'POST'])
-"""
-This is the main route of the website
-the phrase is the input from the user 
-and the sentence is the generated sentence
-we get back
-"""
 def home():
+    """
+    This is the main route of the website
+    the phrase is the input from the user 
+    and the sentence is the generated sentence
+    we get back
+    """
     phrase = None
     sentence = None
     form = BookForm()
