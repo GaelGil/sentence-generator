@@ -1,6 +1,7 @@
 from flask import Flask, render_template, flash, redirect,  url_for
 from forms import BookForm, Make_Sentece_Form
 from app import make_sentence, generate_sentence
+from api import send_request_to_server
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '42f49c1690ad3348fa5212382e379685'

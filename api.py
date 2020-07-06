@@ -1,14 +1,11 @@
-from flask import Flask
-from flask_restful import Resource, Api
+import requests
 
-app = Flask(__name__)
-api = Api(app)
 
-class HelloWorld(Resource):
-    def get(self):
-        return {'hello': 'world'}
 
-api.add_resource(HelloWorld, '/')
+def send_request_to_server(sentence:str):
+    pload = {"task": f"{sentence}"}
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    session = requests.Session()
+    response = session.post("http://34.94.206.234:5000/todos", data=pload)
+
+    return(response.text)
