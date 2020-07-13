@@ -22,7 +22,8 @@ def home():
     form = BookForm()
     if form.validate_on_submit():
        phrase = form.book.data
-       sentence = make_sentence(form.book.data)
+       sentence = send_request_to_server(phrase)
+    #    sentence = make_sentence(form.book.data)
        form.book.data = ''
     return render_template('home.html', form=form, phrase=phrase, sentence=sentence)
 

@@ -1,9 +1,6 @@
 import random 
 import re
 
-
-
-# def markov_generated_sentence(text_data:str):
     
 
 
