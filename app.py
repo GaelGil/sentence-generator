@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, redirect,  url_for
+from flask import Flask, render_template
 from forms import BookForm, Make_Sentece_Form
 # from app import create_book, generate_sentence
 from markov_function import TextCreator as tc
@@ -31,4 +31,3 @@ def generate():
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
