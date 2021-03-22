@@ -6,7 +6,7 @@ In this project I created a webapp using flask that you can go to at [project](h
 In this website you can input some text into a form that will then generate a sentence from that text. It does this by createing a markov chain with the text. If you dont know what a markov chain is you can go to my [website](https://gaelgil.github.io/my_markov_chain/) where I go over a basic markov chain. But in its simplest form it creates a dictionary with probabolities. These probabilities can be used to predict what words come after each ohter. With this we can createa sentence. Down below will be a visual to even further understand. 
 
 ![image of markov chain](./chain.png)
-The image of above is a markov chain a visual of a very simple markov chain. As you can see Point E is more likely to go to Point A, but Point A is just slightly more likely to go back to it’s self. A real life example of this is the weather. Using a markov chain you can predict what the weather will be given the weather before. If we create a visual representation for the weather a simple visual would look like this.
+The image of above is a simple markov chain. As you can see Point E is more likely to go to Point A, but Point A is just slightly more likely to go back to it’s self. A real life example of this is the weather. Using a markov chain you can predict what the weather will be given the weather before. If we create a visual representation for the weather a simple visual would look like this.
 
 
 ## Try it out

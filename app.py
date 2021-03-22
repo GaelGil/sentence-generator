@@ -1,10 +1,14 @@
 from flask import Flask, render_template
 from forms import BookForm, Make_Sentece_Form
-# from app import create_book, generate_sentence
-from markov_function import TextCreator as tc
+from markov_function import TextCreator
+import os
+
+
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = '42f49c1690ad3348fa5212382e379685'
+
+app.config['SECRET_KEY'] = os.environ['generatorSecretKey']
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -13,7 +17,7 @@ def home():
     form = BookForm()
     if form.validate_on_submit():
        phrase = form.book.data
-       MarkovChain = tc(form.book.data)
+       MarkovChain = TextCreator(form.book.data)
        sentence = MarkovChain.generate_text(output_length=20)
        form.book.data = ''
     return render_template('home.html', form=form, phrase=phrase, sentence=sentence)
