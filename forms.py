@@ -8,3 +8,4 @@ class BookForm(FlaskForm):
 
 class Make_Sentece_Form(FlaskForm):
     submit = SubmitField('Enter')
+    
