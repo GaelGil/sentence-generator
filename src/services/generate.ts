@@ -1,32 +1,37 @@
 export class Generator {
   content: string;
-  model: Record<string, Record<string, number>>;
+  cleanedContent: string;
+  tokenizedContent: string[];
+  transition_probs: Record<string, Record<string, number>>;
 
   // Constructor
   constructor(content: string) {
     this.content = content;
+    this.cleanedContent = this.cleanContent();
+    this.tokenizedContent = this.cleanedContent.split(" ");
+    this.transition_probs = this.initTransitionProbs();
+    this.cleanedContent = this.cleanContent();
   }
 
   // Methods
 
-  initModel(): void {
-
-    for (let i = 0; i < this.content.length; i++) {
-
-        
-    }
-    this.model = model;
+  cleanContent(): string {
+    return this.content.replace(/[^a-zA-Z0-9\s]/g, "");
   }
 
-  createModel(): string {
-    return this.model;
+  initTransitionProbs(): Record<string, Record<string, number>> {
+    for (let i = 0; i < this.tokenizedContent.length - 1; i++) {
+      let currentWord = this.tokenizedContent[i];
+      if (!this.transition_probs.hasOwnProperty(currentWord)) {
+        this.transition_probs[currentWord][this.tokenizedContent[i + 1]] = 0;
+      } else if (this.transition_probs.hasOwnProperty(currentWord)) {
+        this.transition_probs[currentWord][this.tokenizedContent[i + 1]] += 1;
+      }
+    }
+    return this.transition_probs;
   }
 
   generate(): string {
-    this.initModel();
-    this.
     return this.content;
   }
-
 }
-
