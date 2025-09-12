@@ -1,19 +1,69 @@
-# sentence-generator
+# React + TypeScript + Vite
 
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## What This Does
-In this project I created a webapp using flask that you can go to at [project](https://github.com/GaelGil/markov-app).
-In this website you can input some text into a form that will then generate a sentence from that text. It does this by creating a markov chain with the text. If you don't know what a markov chain is you can go to my [website](https://gaelgil.github.io/my_markov_chain/) where introduce markov chains. But in its simplest form it creates a dictionary with probabilities. These probabilities can be used to predict what words come after each other. With this we can create a sentence. Down below will be a visual to even further understand.
+Currently, two official plugins are available:
 
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-![image of markov chain](./data/chain.png)
-The image above is a simple markov chain. As you can see Point E is more likely to go to Point A, but Point A is just slightly more likely to go back to itself. A real life example of this is the weather. Using a markov chain you can predict what the weather will be given the weather before. If we create a visual representation for the weather a simple visual would look like this. In pi
+## Expanding the ESLint configuration
 
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## Try it out
-To install the requirements we can do `pip install -r requirements.txt`. Because Im using flask for this project to start the project we will need to run `export FLASK_APP=app.py` and lastly `flask run`
+```js
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
+      // Remove tseslint.configs.recommended and replace with this
+      ...tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      ...tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      ...tseslint.configs.stylisticTypeChecked,
 
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-## Things to note
-This app is currently deployed on heroku [here](https://github.com/GaelGil/markov-app). In a production environment, the application’s front end will live on a different server from the markov model. However, this model is lightweight so to keep things simpler I left it on the same server. Ideally the model would be on a seperate gcp for aws server and my heroku server that hosts the frontend would just call my model server and return some output. I was previously able to do this by using google cloud platform for my model server and heroku for frontend. I needed the free gcp credits for a larger project so for now the model doesn't have a seperate server. Therefore `api.py` is not being used.
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
