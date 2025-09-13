@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Generator } from "./services/generate";
+import About from "./components/About";
+import Banner from "./components/Banner";
 export default function App() {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState<boolean>();
@@ -34,22 +36,8 @@ export default function App() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-8">
-      <h4 className="text-xl block font-bold mb-4">Setence Generator</h4>
-      <a
-        href="https://github.com/GaelGil/sentence-generator"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 mb-4"
-      >
-        Github Repo
-        <img
-          src="https://skillicons.dev/icons?i=github"
-          alt="GitHub"
-          className="w-5 h-5"
-        />
-      </a>
-
+    <div className="max-w-3xl mx-auto py-12">
+      <Banner />
       <p>Please enter a large amount of text containing at least 1000 words.</p>
       <form onSubmit={handleSubmit} className="py-4 grid grid-cols-1 gap-6">
         <textarea
@@ -99,7 +87,7 @@ export default function App() {
             {generatedContent ? (
               <>
                 {isExpanded && generatedContent && (
-                  <div className="h-64 overflow-auto  rounded">
+                  <div className="h-50 overflow-auto ">
                     <p className="text-sm">
                       {JSON.stringify(transitionProbs, null, 2)}
                     </p>
@@ -114,10 +102,7 @@ export default function App() {
         )}
       </>
 
-      <div className="mt-12">
-        <h4 className="text-xl block font-bold mb-4">How it Works</h4>
-        <p>...</p>
-      </div>
+      <About />
     </div>
   );
 }
