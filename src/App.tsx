@@ -18,7 +18,7 @@ export default function App() {
     try {
       console.log(loading);
       const generator: Generator = new Generator(content);
-      const response: string = generator.generate(100, 1);
+      const response: string = generator.generate(100);
       console.log(generator.transition_probs);
       setGeneratedContent(response);
       // alert(content);
