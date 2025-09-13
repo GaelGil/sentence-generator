@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Generator } from "./services/generate";
 export default function App() {
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>();
   const [generatedContent, setGeneratedContent] = useState("");
   const [transitionProbs, setTransitionProbs] = useState({});
   const [isExpanded, setIsExpanded] = useState(false);
@@ -11,6 +11,10 @@ export default function App() {
     e.preventDefault();
     setContent(e.target.value);
   };
+
+  useEffect(() => {
+    console.log("Loading changed:", loading);
+  }, [loading]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,7 +26,6 @@ export default function App() {
       console.log(generator.transition_probs);
       setTransitionProbs(generator.transition_probs);
       setGeneratedContent(response);
-      // alert(content);
     } catch (error) {
       console.log(error);
     } finally {
@@ -58,26 +61,31 @@ export default function App() {
         {!content ? (
           <></>
         ) : (
-          <div className="mt-12">
+          <div className="mt-12 flex  gap-4">
             <button
               type="submit"
-              className="inline-block px-6 py-3 border
-            border-secondary-300
-            text-secondary-300 rounded-lg font-medium hover:text-primary-600 hover:border-primary-600 cursor-pointer"
+              className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200"
             >
               Generate
             </button>
-            {generatedContent ? (
-              <button
-                type="submit"
-                onClick={() => setGeneratedContent("")}
-                className="inline-block px-6 py-3 border
-            border-secondary-300 text-secondary-300 rounded-lg font-medium hover:text-primary-600 hover:border-primary-600 cursor-pointer"
-              >
-                Clear
-              </button>
-            ) : (
-              <></>
+            {generatedContent && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setGeneratedContent("")}
+                  className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200"
+                >
+                  Clear
+                </button>
+                <button
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200"
+                >
+                  {isExpanded
+                    ? "Hide details"
+                    : "Show Transition Probabilities"}
+                </button>
+              </>
             )}
           </div>
         )}
@@ -88,20 +96,20 @@ export default function App() {
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
         ) : (
           <>
-            <button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 mb-4"
-            >
-              {isExpanded ? "Hide details" : "Show Transition Probabilities"}
-            </button>
-            {isExpanded && generatedContent && (
-              <div className="h-64 overflow-auto  rounded">
-                <p className="text-sm">
-                  {JSON.stringify(transitionProbs, null, 2)}
-                </p>
-              </div>
+            {generatedContent ? (
+              <>
+                {isExpanded && generatedContent && (
+                  <div className="h-64 overflow-auto  rounded">
+                    <p className="text-sm">
+                      {JSON.stringify(transitionProbs, null, 2)}
+                    </p>
+                  </div>
+                )}
+                <p className="py-4">{generatedContent}</p>
+              </>
+            ) : (
+              <></>
             )}
-            <p className="py-4">{generatedContent}</p>
           </>
         )}
       </>
