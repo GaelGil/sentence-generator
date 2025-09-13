@@ -8,6 +8,8 @@ export default function App() {
   const [generatedContent, setGeneratedContent] = useState("");
   const [transitionProbs, setTransitionProbs] = useState({});
   const [isExpanded, setIsExpanded] = useState(false);
+  const [message, setMessage] = useState("");
+  const [outputLength, setOutputLength] = useState(100);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
@@ -20,11 +22,17 @@ export default function App() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const textLength = content.split(" ").length;
+    if (textLength < 1000) {
+      setMessage("Please enter at least 1000 words");
+      return;
+    }
+    setMessage("");
     setLoading(true);
     try {
       console.log(loading);
       const generator: Generator = new Generator(content);
-      const response: string = generator.generate(100);
+      const response: string = generator.generate(outputLength);
       console.log(generator.transition_probs);
       setTransitionProbs(generator.transition_probs);
       setGeneratedContent(response);
@@ -46,6 +54,7 @@ export default function App() {
           placeholder="Enter Text Here ..."
           className="p-2 text-md text-secondary-300 border border-secondary-300 rounded-md focus:outline-none focus:border-primary-600"
         />
+        {message && <p className="text-red-500">{message}</p>}
         {!content ? (
           <></>
         ) : (
@@ -75,6 +84,20 @@ export default function App() {
                 </button>
               </>
             )}
+            <div>
+              <label htmlFor="slider" className="block mb-2 font-medium">
+                Value: {outputLength}
+              </label>
+              <input
+                id="slider"
+                type="range"
+                min={0}
+                max={100}
+                value={outputLength}
+                onChange={(e) => setOutputLength(Number(e.target.value))}
+                className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+              />
+            </div>
           </div>
         )}
       </form>

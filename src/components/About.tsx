@@ -3,12 +3,12 @@ const HomeBanner = () => {
     <div className="my-12">
       <h1 className="text-3xl font-bold mb-4">How it Works</h1>
       <p>
-        To generate sentences we use markov chains. A markov chain is a sequence
+        To generate sentences we use Markov chains. A Markov chain is a sequence
         of events where the probability of future events depend only on the
         current event.
         <br />
         <br />
-        In our case the markov chain is a sequence of words. Where the next word
+        In our case the Markov chain is a sequence of words. Where the next word
         can be predicted based on the current word. I did this by creating a
         dictionary of all the words in a given text. Then for each word we get
         the following words and count them.
@@ -28,8 +28,8 @@ const HomeBanner = () => {
         We can see that some words are more common than others. For example car
         is more likely to be followed by drove rather than person or exploeded.
         <br />
-        <br />I applied softmax to this dictionary to accureately represent a
-        markov chain. This means all probabilities of each of the next words sum
+        <br />I applied softmax to this dictionary to accurately represent a
+        Markov chain. This means all probabilities of each of the next words sum
         to 1. To learn more about the implementation check out the repo!
       </p>
     </div>
