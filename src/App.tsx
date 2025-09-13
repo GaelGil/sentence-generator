@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Generator } from "./services/generate";
 export default function App() {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,8 +17,11 @@ export default function App() {
     setLoading(true);
     try {
       console.log(loading);
-      setGeneratedContent(content);
-      alert(content);
+      const generator: Generator = new Generator(content);
+      const response: string = generator.generate(100, 1);
+      console.log(generator.transition_probs);
+      setGeneratedContent(response);
+      // alert(content);
     } catch (error) {
       console.log(error);
     } finally {
