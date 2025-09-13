@@ -46,7 +46,10 @@ export default function App() {
   return (
     <div className="max-w-3xl mx-auto py-12">
       <Banner />
-      <p>Please enter a large amount of text containing at least 1000 words.</p>
+      <p>
+        Please enter a large amount of text containing at least 1000 words. Set
+        your output length below as well.
+      </p>
       <form onSubmit={handleSubmit} className="py-4 grid grid-cols-1 gap-6">
         <textarea
           value={content}
@@ -86,7 +89,7 @@ export default function App() {
             )}
             <div>
               <label htmlFor="slider" className="block mb-2 font-medium">
-                Value: {outputLength}
+                Output Length: {outputLength}
               </label>
               <input
                 id="slider"
