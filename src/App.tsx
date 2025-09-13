@@ -32,6 +32,9 @@ export default function App() {
   return (
     <div className="max-w-4xl mx-auto p-8">
       <h4 className="text-xl block font-bold mb-4">Setence Generator</h4>
+      <p>
+        <a href="https://github.com/GaelGil/sentence-generator">repo</a>
+      </p>
       <p>Please enter a large amount of text containing at least 1000 words.</p>
       <form onSubmit={handleSubmit} className="py-4 grid grid-cols-1 gap-6">
         <textarea
