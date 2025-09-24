@@ -1,6 +1,8 @@
 const HomeBanner = () => {
   return (
-    <div className="my-12">
+    <div className="my-12 mt-12">
+      <hr />
+      <br />
       <h1 className="text-3xl font-bold mb-4">How it Works</h1>
       <p>
         To generate sentences we use Markov chains. A Markov chain is a sequence
