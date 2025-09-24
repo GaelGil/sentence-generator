@@ -3,6 +3,7 @@ export class Generator {
   cleanedContent: string;
   tokenizedContent: string[];
   transition_probs: Record<string, Record<string, number>>;
+  cummulativeDistribution: Record<string, Record<string, number>>;
 
   constructor(content: string) {
     this.content = content;
@@ -12,6 +13,7 @@ export class Generator {
       .trim();
     this.tokenizedContent = this.cleanedContent.split(" ");
     this.transition_probs = {};
+    this.cummulativeDistribution = {};
     this.initTransitionProbs();
   }
 
@@ -59,6 +61,17 @@ export class Generator {
 
       // update transition probabilities
       this.transition_probs[currentWord] = normalizedDict;
+    }
+
+    for (const currentWord in this.transition_probs) {
+      const nextWordDict = this.transition_probs[currentWord];
+      let cumulativeDict: Record<string, number> = {};
+      let total = 0;
+      for (const nextWord in nextWordDict) {
+        total += nextWordDict[nextWord];
+        cumulativeDict[nextWord] = total;
+      }
+      this.cummulativeDistribution[currentWord] = cumulativeDict;
     }
 
     return this.transition_probs;

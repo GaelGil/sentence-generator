@@ -33,7 +33,6 @@ export default function App() {
       console.log(loading);
       const generator: Generator = new Generator(content);
       const response: string = generator.generate(outputLength);
-      console.log(generator.transition_probs);
       setTransitionProbs(generator.transition_probs);
       setGeneratedContent(response);
     } catch (error) {
