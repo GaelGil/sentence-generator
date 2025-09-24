@@ -4,6 +4,7 @@ import About from "./components/About";
 import Banner from "./components/Banner";
 export default function App() {
   const [content, setContent] = useState("");
+  const [temperature, setTemperature] = useState(1);
   const [loading, setLoading] = useState<boolean>();
   const [generatedContent, setGeneratedContent] = useState("");
   const [transitionProbs, setTransitionProbs] = useState({});
@@ -31,7 +32,7 @@ export default function App() {
     setLoading(true);
     try {
       console.log(loading);
-      const generator: Generator = new Generator(content);
+      const generator: Generator = new Generator(content, temperature);
       const response: string = generator.generate(outputLength);
       setTransitionProbs(generator.transition_probs);
       setGeneratedContent(response);
@@ -97,6 +98,21 @@ export default function App() {
                 max={100}
                 value={outputLength}
                 onChange={(e) => setOutputLength(Number(e.target.value))}
+                className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+              />
+            </div>
+            <div>
+              <label htmlFor="slider" className="block mb-2 font-medium">
+                Temperature: {temperature}
+              </label>
+              <input
+                id="slider"
+                type="range"
+                min={0}
+                max={2}
+                step={0.01}
+                value={temperature}
+                onChange={(e) => setTemperature(Number(e.target.value))}
                 className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
               />
             </div>

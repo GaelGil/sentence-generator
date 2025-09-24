@@ -4,8 +4,9 @@ export class Generator {
   tokenizedContent: string[];
   transition_probs: Record<string, Record<string, number>>;
   cummulativeDistribution: Record<string, Record<string, number>>;
+  temperature: number;
 
-  constructor(content: string) {
+  constructor(content: string, temperature: number = 0.001) {
     this.content = content;
     this.cleanedContent = content
       .toLowerCase()
@@ -14,6 +15,7 @@ export class Generator {
     this.tokenizedContent = this.cleanedContent.split(" ");
     this.transition_probs = {};
     this.cummulativeDistribution = {};
+    this.temperature = temperature;
     this.initTransitionProbs();
   }
 
@@ -40,7 +42,7 @@ export class Generator {
 
     // apply softmax
     for (const currentWord in this.transition_probs) {
-      let normalizedDict: Record<string, number> = {};
+      const normalizedDict: Record<string, number> = {};
       const nextWordDict = this.transition_probs[currentWord];
 
       let numerator = 0;
@@ -49,14 +51,15 @@ export class Generator {
       for (let j = 0; j < keys.length; j++) {
         const word: string = keys[j];
         const wordCount: number = nextWordDict[word];
-        numerator += Math.exp(wordCount);
+        numerator += Math.exp(wordCount / this.temperature);
       }
 
       // calculate normalized probabilities
       for (let j = 0; j < keys.length; j++) {
         const word: string = keys[j];
         const wordCount: number = nextWordDict[word];
-        normalizedDict[word] = Math.exp(wordCount) / numerator;
+        normalizedDict[word] =
+          Math.exp(wordCount / this.temperature) / numerator;
       }
 
       // update transition probabilities
@@ -66,11 +69,13 @@ export class Generator {
     for (const currentWord in this.transition_probs) {
       const nextWordDict = this.transition_probs[currentWord];
       let cumulativeDict: Record<string, number> = {};
+      const nextWords = Object.keys(nextWordDict).sort(); // sort keys for consistent order
       let total = 0;
-      for (const nextWord in nextWordDict) {
+      for (const nextWord of nextWords) {
         total += nextWordDict[nextWord];
         cumulativeDict[nextWord] = total;
       }
+
       this.cummulativeDistribution[currentWord] = cumulativeDict;
     }
 
@@ -78,34 +83,39 @@ export class Generator {
   }
 
   generate(length: number): string {
-    let outputText = [];
+    const outputText: string[] = [];
+
+    // Pick a random starting word
     const randomIndex: number = Math.floor(
       Math.random() * this.tokenizedContent.length
     );
     let currentWord: string = this.tokenizedContent[randomIndex];
-    let i: number = 0;
+
+    let i = 0;
     while (i < length) {
       outputText.push(currentWord);
 
-      const nextWordDict = this.transition_probs[currentWord];
-      if (!nextWordDict) break; // stop if no next words
+      const nextWordCDF = this.cummulativeDistribution[currentWord];
+      if (!nextWordCDF) break; // no known transitions from this word
 
-      // Find the word with max probability
-      let maxWord: string = "";
-      let maxCount: number = -Infinity;
+      // Sample from the CDF
+      const r = Math.random(); // random number between 0 and 1
+      let sampledWord = "";
 
-      const keys = Object.keys(nextWordDict); // all possible next words
-      for (let j = 0; j < keys.length; j++) {
-        const word: string = keys[j];
-        const count: number = nextWordDict[word];
-        if (count > maxCount) {
-          maxCount = count;
-          maxWord = word;
+      for (const [word, cumulative] of Object.entries(nextWordCDF)) {
+        if (r <= cumulative) {
+          sampledWord = word;
+          break;
         }
       }
 
-      currentWord = maxWord;
+      // Fallback in case something goes wrong
+      if (!sampledWord) {
+        const fallbackKeys = Object.keys(nextWordCDF);
+        sampledWord = fallbackKeys[fallbackKeys.length - 1];
+      }
 
+      currentWord = sampledWord;
       i++;
     }
 
