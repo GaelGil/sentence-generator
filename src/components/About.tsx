@@ -32,7 +32,10 @@ const HomeBanner = () => {
         <br />
         <br />I applied softmax to this dictionary to accurately represent a
         Markov chain. This means all probabilities of each of the next words sum
-        to 1. To learn more about the implementation check out the repo!
+        to 1. To learn more about the implementation check out the repo
+        specifically the src/services/generate.ts file. In there you can see how
+        I sample words from the Markov chain, apply softmax, apply temperature
+        and generate sentences.
       </p>
     </div>
   );
