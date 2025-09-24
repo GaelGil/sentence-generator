@@ -1,25 +1,26 @@
 export class Generator {
-  content: string;
-  cleanedContent: string;
-  tokenizedContent: string[];
-  transition_probs: Record<string, Record<string, number>>;
-  cummulativeDistribution: Record<string, Record<string, number>>;
-  temperature: number;
+  content: string; // the original content
+  cleanedContent: string; // the cleaned content
+  tokenizedContent: string[]; // the tokenized content ie ["hello", "world"]
+  transition_probs: Record<string, Record<string, number>>; // the transition probabilities
+  cummulativeDistribution: Record<string, Record<string, number>>; // the cummulative distribution of the transition probabilities
+  temperature: number; // the temperature
 
   constructor(content: string, temperature: number = 0.001) {
-    this.content = content;
-    this.cleanedContent = content
+    this.content = content; // set the content
+    this.cleanedContent = content // clean the content
       .toLowerCase()
       .replace(/[^a-zA-Z0-9\s]/g, "")
       .trim();
-    this.tokenizedContent = this.cleanedContent.split(" ");
-    this.transition_probs = {};
-    this.cummulativeDistribution = {};
-    this.temperature = temperature;
-    this.initTransitionProbs();
+    this.tokenizedContent = this.cleanedContent.split(" "); // tokenize the content
+    this.transition_probs = {}; // initialize the transition probabilitie dictionary
+    this.cummulativeDistribution = {}; // initialize the cummulative distribution dictionary
+    this.temperature = temperature; // set the temperature
+    this.initTransitionProbs(); //
   }
 
   cleanContent(): string {
+    // function to clean the content
     return this.content.replace(/[^a-zA-Z0-9\s]/g, "");
   }
 
@@ -66,16 +67,18 @@ export class Generator {
       this.transition_probs[currentWord] = normalizedDict;
     }
 
+    // calculate cummulative distribution
     for (const currentWord in this.transition_probs) {
-      const nextWordDict = this.transition_probs[currentWord];
-      let cumulativeDict: Record<string, number> = {};
+      const nextWordDict = this.transition_probs[currentWord]; // get next word probabilities
+      let cumulativeDict: Record<string, number> = {}; // initialize cumulative dictionary
       const nextWords = Object.keys(nextWordDict).sort(); // sort keys for consistent order
-      let total = 0;
+      let total = 0; // initialize total for cumulative distribution
       for (const nextWord of nextWords) {
-        total += nextWordDict[nextWord];
-        cumulativeDict[nextWord] = total;
+        // loop through next words
+        total += nextWordDict[nextWord]; // add next word probability to total
+        cumulativeDict[nextWord] = total; // update the words cumulative distribution
       }
-
+      // update transition probabilities
       this.cummulativeDistribution[currentWord] = cumulativeDict;
     }
 
@@ -83,27 +86,31 @@ export class Generator {
   }
 
   generate(length: number): string {
-    const outputText: string[] = [];
+    const outputText: string[] = []; // output text
 
-    // Pick a random starting word
     const randomIndex: number = Math.floor(
       Math.random() * this.tokenizedContent.length
-    );
+    ); // get random index
+    // get word from random index
     let currentWord: string = this.tokenizedContent[randomIndex];
 
     let i = 0;
     while (i < length) {
+      // add word to output
       outputText.push(currentWord);
 
-      const nextWordCDF = this.cummulativeDistribution[currentWord];
+      const nextWordCDF = this.cummulativeDistribution[currentWord]; // get next word CDF
       if (!nextWordCDF) break; // no known transitions from this word
 
-      // Sample from the CDF
+      // sample next word
       const r = Math.random(); // random number between 0 and 1
-      let sampledWord = "";
+      let sampledWord = ""; // sampled word
 
+      // loop through next word CDF
       for (const [word, cumulative] of Object.entries(nextWordCDF)) {
+        // if random number is less than cumulative
         if (r <= cumulative) {
+          // sample the word
           sampledWord = word;
           break;
         }
@@ -115,7 +122,9 @@ export class Generator {
         sampledWord = fallbackKeys[fallbackKeys.length - 1];
       }
 
+      // update current word
       currentWord = sampledWord;
+      // increment i
       i++;
     }
 
