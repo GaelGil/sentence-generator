@@ -72,11 +72,12 @@ export class Generator {
       const nextWordDict = this.transition_probs[currentWord]; // get next word probabilities
       let cumulativeDict: Record<string, number> = {}; // initialize cumulative dictionary
       const nextWords = Object.keys(nextWordDict).sort(); // sort keys for consistent order
-      let total = 0; // initialize total for cumulative distribution
+      // initialize total for the current dictionaries total ie {"cat": 0.6, "dog": 0.3,"mouse": 0.1 } should equal 1
+      let total = 0;
+      // loop through next words
       for (const nextWord of nextWords) {
-        // loop through next words
         total += nextWordDict[nextWord]; // add next word probability to total
-        cumulativeDict[nextWord] = total; // update the words cumulative distribution
+        cumulativeDict[nextWord] = total; // update the words cumulative distribution ie {"cat": 0.6, "dog": 0.9,"mouse": 1 }
       }
       // update transition probabilities
       this.cummulativeDistribution[currentWord] = cumulativeDict;
