@@ -12,7 +12,9 @@ export class Generator {
       .toLowerCase()
       .replace(/[^a-zA-Z0-9\s]/g, "")
       .trim();
-    this.tokenizedContent = this.cleanedContent.split(" "); // tokenize the content
+    this.tokenizedContent = this.cleanedContent
+      ? this.cleanedContent.split(/\s+/)
+      : []; // tokenize the content
     this.transition_probs = {}; // initialize the transition probabilitie dictionary
     this.cummulativeDistribution = {}; // initialize the cummulative distribution dictionary
     this.temperature = temperature; // set the temperature
@@ -41,26 +43,22 @@ export class Generator {
       this.transition_probs[currentWord][nextWord] += 1;
     }
 
-    // apply softmax
     for (const currentWord in this.transition_probs) {
       const normalizedDict: Record<string, number> = {};
       const nextWordDict = this.transition_probs[currentWord];
 
-      let numerator = 0;
-      // calculate denominator
       const keys = Object.keys(nextWordDict);
-      for (let j = 0; j < keys.length; j++) {
-        const word: string = keys[j];
-        const wordCount: number = nextWordDict[word];
-        numerator += Math.exp(wordCount / this.temperature);
+
+      let total = 0;
+
+      // calculate total counts
+      for (const word of keys) {
+        total += nextWordDict[word];
       }
 
-      // calculate normalized probabilities
-      for (let j = 0; j < keys.length; j++) {
-        const word: string = keys[j];
-        const wordCount: number = nextWordDict[word];
-        normalizedDict[word] =
-          Math.exp(wordCount / this.temperature) / numerator;
+      // normalize probabilities
+      for (const word of keys) {
+        normalizedDict[word] = nextWordDict[word] / total;
       }
 
       // update transition probabilities
@@ -70,7 +68,7 @@ export class Generator {
     // calculate cummulative distribution
     for (const currentWord in this.transition_probs) {
       const nextWordDict = this.transition_probs[currentWord]; // get next word probabilities
-      let cumulativeDict: Record<string, number> = {}; // initialize cumulative dictionary
+      const cumulativeDict: Record<string, number> = {}; // initialize cumulative dictionary
       const nextWords = Object.keys(nextWordDict).sort(); // sort keys for consistent order
       // initialize total for the current dictionaries total ie {"cat": 0.6, "dog": 0.3,"mouse": 0.1 } should equal 1
       let total = 0;
@@ -90,7 +88,7 @@ export class Generator {
     const outputText: string[] = []; // output text
 
     const randomIndex: number = Math.floor(
-      Math.random() * this.tokenizedContent.length
+      Math.random() * this.tokenizedContent.length,
     ); // get random index
     // get word from random index
     let currentWord: string = this.tokenizedContent[randomIndex];
